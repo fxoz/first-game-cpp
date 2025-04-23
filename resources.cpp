@@ -21,6 +21,7 @@ sf::Texture elixirStorageTexture;
 
 bool resourcesLoaded = false;
 
+
 void initResources() {
     if (resourcesLoaded)
         return;

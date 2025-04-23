@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <utility>
+
+#include "resources.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 
@@ -23,13 +25,11 @@ public:
     TileBase(const sf::Vector2i &index,
              char id,
              std::string name,
-             std::string description,
-             const sf::Texture &texture)
+             std::string description)
         : index(index),
           id(id),
           name(std::move(name)),
-          description(std::move(description)),
-          texture(texture)
+          description(std::move(description))
     {
         position = {
             index.x * TILE_SIZE + GROUND_START_X,
