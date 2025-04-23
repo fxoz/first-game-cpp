@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "base.h"
+#include "ResourceManager.h"
 #include "SFML/Audio/Sound.hpp"
 #include "SFML/Audio/SoundBuffer.hpp"
 #include "SFML/Graphics/Font.hpp"
@@ -45,8 +46,8 @@ float addOptionRange(sf::RenderWindow &window, float y,
     descriptionText.setFillColor(sf::Color(255, 255, 255, 150));
     window.draw(descriptionText);
 
-    static sf::Texture sliderBgTexture;
-    sliderBgTexture.loadFromFile(FOLDER_ASSETS "textures/slider-bg.png");
+    // textures/ui/slider-bg.png
+    static sf::Texture sliderBgTexture = *ResourceHolder::getInstance().getTexture(FOLDER_ASSETS "textures/ui/slider-bg.png");
     sf::Sprite sliderBg;
     sliderBg.setTexture(sliderBgTexture);
     sliderBg.setPosition(sliderX, sliderY);
@@ -58,8 +59,7 @@ float addOptionRange(sf::RenderWindow &window, float y,
     sliderFill.setPosition(sliderX, sliderY);
     window.draw(sliderFill);
 
-    static sf::Texture sliderHandleTexture;
-    sliderHandleTexture.loadFromFile(FOLDER_ASSETS "textures/slider-handle.png");
+    static sf::Texture sliderHandleTexture = *ResourceHolder::getInstance().getTexture(FOLDER_ASSETS "textures/ui/slider-handle.png");
     sf::Sprite sliderHandle;
     sliderHandle.setTexture(sliderHandleTexture);
     sliderHandle.setPosition(sliderX + sliderWidth * ratio - 5, sliderY - 6);
@@ -118,7 +118,8 @@ float addOptionCheck(sf::RenderWindow &window, float y,
     window.draw(descriptionText);
 
     static sf::Texture checkTexture;
-    checkTexture.loadFromFile(value ? FOLDER_ASSETS "textures/yes.png" : FOLDER_ASSETS "textures/no.png");
+    checkTexture = *ResourceHolder::getInstance().getTexture(FOLDER_ASSETS "textures/ui/"
+                                                "check-" + std::string(value ? "on" : "off") + ".png");
     sf::Sprite checkSprite;
     checkSprite.setTexture(checkTexture);
     checkSprite.setScale(2, 2);
@@ -152,7 +153,7 @@ float addOptionCheck(sf::RenderWindow &window, float y,
 
 void renderSettings(sf::RenderWindow &window) {
     const float headerY = 4 * REM;
-    sf::Font font = getFont();
+    sf::Font font = *ResourceHolder::getInstance().getFont(FOLDER_ASSETS "fonts/ui.ttf");
 
     sf::Text settingsText("SETTINGS", font, 42);
     settingsText.setStyle(sf::Text::Bold);

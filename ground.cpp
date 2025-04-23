@@ -1,6 +1,5 @@
 #include "base.h"
 #include "ground.h"
-#include "resources.h"
 #include "TileBase.h"
 #include "tiles/Brick.h"
 // #include "tiles/ElixirPump.h"
@@ -21,9 +20,11 @@ sf::Vector2f getTilePosition(const sf::Vector2i &tileIndex) {
 }
 
 void renderGround(sf::RenderWindow &window) {
-    initResources();
+    auto &resources = ResourceHolder::getInstance();
+    auto clickSoundBuffer = resources.getSoundBuffer(FOLDER_ASSETS "sfx/tile.mp3");
+    sf::Sound clickSound;
+    clickSound.setBuffer(*clickSoundBuffer);
 
-    static sf::Sound clickSound;
     static sf::Vector2i selectedTile(-1, -1);
 
     constexpr int LEVEL_X = 16;
@@ -58,7 +59,7 @@ void renderGround(sf::RenderWindow &window) {
         clickSound.play();
 
         sf::Sprite overlay;
-        overlay.setTexture(selectOverlayTexture);
+        overlay.setTexture(*resources.getTexture(FOLDER_ASSETS "textures/selection.png"));
         overlay.scale(sf::Vector2f(TILE_ZOOM_HALF, TILE_ZOOM_HALF));
         overlay.setPosition(getTilePosition(selectedTile));
         window.draw(overlay);

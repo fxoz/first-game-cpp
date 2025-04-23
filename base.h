@@ -5,9 +5,6 @@
 #define WINDOW_NAME "Tiles"
 #define FOLDER_ASSETS "assets/"
 
-
 #include "SFML/Graphics/Font.hpp"
-
-sf::Font getFont();
 
 #endif

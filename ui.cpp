@@ -3,9 +3,10 @@
 #include "ui.h"
 #include "base.h"
 
+#include "ResourceManager.h"
+
 void renderUi(sf::RenderWindow &window) {
-    sf::Texture uiIconCash;
-    uiIconCash.loadFromFile(FOLDER_ASSETS "textures/cash.png");
+    sf::Texture uiIconCash = *ResourceHolder::getInstance().getTexture(FOLDER_ASSETS "textures/ui/cash.png");
 
     sf::Sprite uiIconCashSprite;
     uiIconCashSprite.scale(sf::Vector2f(2.f, 2.f));
@@ -15,7 +16,7 @@ void renderUi(sf::RenderWindow &window) {
     window.draw(uiIconCashSprite);
 
     sf::Text uiTextBalance;
-    sf::Font font = getFont();
+    sf::Font font = *ResourceHolder::getInstance().getFont(FOLDER_ASSETS "fonts/ui.ttf");
     uiTextBalance.setFont(font);
     uiTextBalance.setString("Balance: 1000");
     uiTextBalance.setCharacterSize(32);
@@ -28,7 +29,7 @@ void renderUi(sf::RenderWindow &window) {
 
 void renderFps(sf::RenderWindow &window, int fps) {
     static sf::Text uiTextFps;
-    static sf::Font font = getFont();
+    static sf::Font font = *ResourceHolder::getInstance().getFont(FOLDER_ASSETS "fonts/ui.ttf");
 
     uiTextFps.setFont(font);
     uiTextFps.setCharacterSize(26);
