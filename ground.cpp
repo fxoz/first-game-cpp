@@ -47,7 +47,7 @@ void renderGround(sf::RenderWindow &window) {
         sf::Sprite overlay;
         overlay.setTexture(selectOverlayTexture);
         overlay.scale(sf::Vector2f(TILE_ZOOM_HALF, TILE_ZOOM_HALF));
-        overlay.setPosition(selectedTile.x*SCALED_TILE_SIZE+GROUND_START_X, selectedTile.y*SCALED_TILE_SIZE);
+        overlay.setPosition(selectedTile.x*SCALED_TILE_SIZE+GROUND_START_X, selectedTile.y*SCALED_TILE_SIZE+GROUND_START_Y);
         window.draw(overlay);
     }
 }

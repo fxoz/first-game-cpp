@@ -4,10 +4,8 @@
 #define WINDOW_NAME "Tiles"
 
 #define TILE_SIZE 16
-#define TILE_ZOOM 4.f
+#define TILE_ZOOM 3.f
 #define REM 16
-
-#define GROUND_START_X 500
 
 #define FOLDER_ASSETS "assets/"
 

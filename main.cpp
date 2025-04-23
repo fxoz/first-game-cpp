@@ -8,10 +8,11 @@
 #include "cmake-build-debug/_deps/sfml-src/src/SFML/Audio/AudioDevice.hpp"
 #include "SFML/Audio/Listener.hpp"
 
-#define FPS_MAX 60
+#define FPS_MAX 360
 #define FPS_IDLE 30
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
+#define VSYNC_ENABLED true
 
 void onKey(sf::RenderWindow &window, sf::Event event, int screenWidth, int screenHeight, bool &isFullscreen, bool &isViewSettings) {
     if (event.key.code == sf::Keyboard::F11) {
@@ -60,7 +61,7 @@ int main() {
     sf::Clock clock;
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_NAME);
     window.setFramerateLimit(FPS_MAX);
-    //window.setVerticalSyncEnabled(true);
+    window.setVerticalSyncEnabled(VSYNC_ENABLED);
 
     int fps = 0;
     float fpsLastUpdatedTime = -1;
