@@ -17,8 +17,17 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SFML)
 add_executable(${PROJECT_NAME} main.cpp
-        background.cpp
+        ground.cpp
         base.h
+        ui.h
+        ui.cpp
+        base.cpp
+        settings.cpp
+        settings.h
+        tile.cpp
+        tile.h
+        resources.cpp
+        resources.h
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${SFML_TARGETS})
