@@ -19,7 +19,7 @@ void renderUi(sf::RenderWindow &window) {
     uiTextBalance.setFont(font);
     uiTextBalance.setString("Balance: 1000");
     uiTextBalance.setCharacterSize(32);
-    uiTextBalance.setPosition(4*REM, .75f*REM);
+    uiTextBalance.setPosition(4*REM, 10);
     uiTextBalance.setFillColor(sf::Color::White);
     uiTextBalance.setStyle(sf::Text::Bold);
 
