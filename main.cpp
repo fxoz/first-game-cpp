@@ -1,18 +1,19 @@
 #include <iostream>
+#include <filesystem>
 #include <SFML/Graphics.hpp>
+#include "SFML/Audio/Listener.hpp"
+#include "cmake-build-debug/_deps/sfml-src/src/SFML/Audio/AudioDevice.hpp"
 
 #include "ui.h"
 #include "base.h"
 #include "ground.h"
 #include "settings.h"
-#include "cmake-build-debug/_deps/sfml-src/src/SFML/Audio/AudioDevice.hpp"
-#include "SFML/Audio/Listener.hpp"
 
 #define FPS_MAX 360
 #define FPS_IDLE 30
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
-#define VSYNC_ENABLED true
+#define VSYNC_ENABLED false
 
 void onKey(sf::RenderWindow &window, sf::Event event, int screenWidth, int screenHeight, bool &isFullscreen, bool &isViewSettings) {
     if (event.key.code == sf::Keyboard::F11) {
@@ -55,6 +56,11 @@ void handleEvents(sf::RenderWindow &window, sf::Event event, int screenWidth, in
 }
 
 int main() {
+    if (!std::filesystem::exists("assets")) {
+        std::cerr << "Assets folder not found!" << std::endl;
+        return 1;
+    }
+
     int screenWidth = sf::VideoMode::getDesktopMode().width;
     int screenHeight = sf::VideoMode::getDesktopMode().height;
 

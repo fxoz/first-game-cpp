@@ -24,13 +24,11 @@ add_executable(${PROJECT_NAME} main.cpp
         base.cpp
         settings.cpp
         settings.h
-        tile.cpp
-        tile.h
         resources.cpp
         resources.h
         tiles/ElixirPump.h
-        TileBase.cpp
         TileBase.h
+        tiles/Brick.h
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${SFML_TARGETS})

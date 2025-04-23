@@ -4,6 +4,9 @@
 
 #include "base.h"
 #include "resources.h"
+
+#include <iostream>
+
 #include "SFML/Audio/SoundBuffer.hpp"
 
 sf::Font font;
@@ -21,6 +24,8 @@ bool resourcesLoaded = false;
 void initResources() {
     if (resourcesLoaded)
         return;
+
+    std::cout << "Loading resources..." << std::endl;
 
     if (!brickTexture.loadFromFile(FOLDER_ASSETS "textures/brick.png"))
         perror("Failed to load brick texture!");
@@ -46,4 +51,5 @@ void initResources() {
     font = getFont();
 
     resourcesLoaded = true;
+    std::cout << "Resources loaded!" << std::endl;
 }
