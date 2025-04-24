@@ -10,6 +10,10 @@
 #include <memory>
 #include <vector>
 
+#include "tiles/Elixir.h"
+#include "tiles/ElixirPump.h"
+#include "tiles/ElixirStorage.h"
+
 using TileGrid = std::vector<std::vector<std::unique_ptr<TileBase>>>;
 
 sf::Vector2f getTilePosition(const sf::Vector2i &tileIndex) {
@@ -30,9 +34,9 @@ void renderGround(sf::RenderWindow &window) {
     constexpr int LEVEL_X = 16;
     constexpr int LEVEL_Y = 16;
 
-    TileGrid level(LEVEL_X);
+    TileGrid level(LEVEL_Y);
     for (auto &row : level) {
-        row.resize(LEVEL_Y);
+        row.resize(LEVEL_X);
     }
 
     int y = 0;
@@ -46,10 +50,15 @@ void renderGround(sf::RenderWindow &window) {
         y++;
     }
 
-    for (int x = 0; x < LEVEL_X; x++) {
-        for (int y = 0; y < LEVEL_Y; y++) {
-            sf::Vector2i tileIndex(x, y);
-            auto &tile = level[x][y];
+    level[1][1] = std::make_unique<ElixirPump>(sf::Vector2i(1, 1));
+    level[1][2] = std::make_unique<Elixir>(sf::Vector2i(2, 1));
+    level[1][3] = std::make_unique<Elixir>(sf::Vector2i(3, 1));
+    level[1][4] = std::make_unique<Elixir>(sf::Vector2i(4, 1));
+    level[1][5] = std::make_unique<ElixirStorage>(sf::Vector2i(5, 1));
+
+    for (int y = 0; y < LEVEL_Y; y++) {
+        for (int x = 0; x < LEVEL_X; x++) {
+            auto &tile = level[y][x];
             tile->render(window);
         }
     }

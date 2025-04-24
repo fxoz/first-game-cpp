@@ -5,7 +5,7 @@
 
 class Brick : public TileBase {
 public:
-    Brick(sf::Vector2i index)
+    explicit Brick(sf::Vector2i index)
         : TileBase(index, 0, "Brick", "An empty tile.", "brick")
     {
     }

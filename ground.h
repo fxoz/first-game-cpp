@@ -1,11 +1,6 @@
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
 
-#define TILE_EMPTY 0
-#define TILE_ELIXIR 1
-#define TILE_ELIXIR_PUMP 2
-#define TILE_ELIXIR_STORAGE 3
-
 #define TILE_ZOOM 3.f
 #define TILE_ZOOM_HALF (TILE_ZOOM / 2.f)
 
