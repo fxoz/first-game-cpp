@@ -53,6 +53,10 @@ public:
         return selected;
     }
 
+    void setSelected(bool selected) {
+        this->selected = selected;
+    }
+
     virtual void render(sf::RenderWindow &window) {
         sf::Sprite sprite;
         sprite.setTexture(*texture);
@@ -61,6 +65,14 @@ public:
         window.draw(sprite);
 
         postRender(window);
+    }
+
+    virtual sf::FloatRect getRectangle() const {
+        sf::Sprite sprite;
+        sprite.setTexture(*texture);
+        sprite.setPosition(position);
+        sprite.scale(sf::Vector2f(TILE_ZOOM_HALF, TILE_ZOOM_HALF));
+        return sprite.getGlobalBounds();
     }
 
     virtual void postRender(sf::RenderWindow &window) {
