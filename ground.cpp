@@ -17,11 +17,45 @@ constexpr int LEVEL_Y = 16;
 
 using TileGrid = std::vector<std::vector<std::unique_ptr<TileBase>>>;
 
+TileGrid level;
+sf::Vector2i currentTile(-1, -1);
+
+void initLevel() {
+    level.resize(LEVEL_Y);
+    for (int y = 0; y < LEVEL_Y; ++y) {
+        level[y].resize(LEVEL_X);
+        for (int x = 0; x < LEVEL_X; ++x) {
+            level[y][x] = std::make_unique<Brick>(sf::Vector2i(x, y));
+        }
+    }
+    level[1][1] = std::make_unique<ElixirPump>(sf::Vector2i(1, 1));
+    level[1][2] = std::make_unique<Elixir>(sf::Vector2i(2, 1));
+    level[1][3] = std::make_unique<Elixir>(sf::Vector2i(3, 1));
+    level[1][4] = std::make_unique<Elixir>(sf::Vector2i(4, 1));
+    level[1][5] = std::make_unique<ElixirStorage>(sf::Vector2i(5, 1), 0.5f);
+}
+
 sf::Vector2f getTilePosition(const sf::Vector2i &tileIndex) {
     return {
         tileIndex.x * TILE_SIZE + GROUND_START_X,
         tileIndex.y * TILE_SIZE + GROUND_START_Y
     };
+}
+
+sf::Vector2i getTileIndex(const sf::Vector2f &mousePos) {
+    return {
+        static_cast<int>((mousePos.x - GROUND_START_X) / TILE_SIZE),
+        static_cast<int>((mousePos.y - GROUND_START_Y) / TILE_SIZE)
+    };
+}
+
+TileBase* getTileAt(const sf::Vector2i &tileIndex) {
+    if (tileIndex.x < 0 || tileIndex.x >= LEVEL_X ||
+        tileIndex.y < 0 || tileIndex.y >= LEVEL_Y ||
+        level.empty() || level[tileIndex.y].empty()) {
+        return nullptr;
+        }
+    return level[tileIndex.y][tileIndex.x].get();
 }
 
 void playClickSound() {
@@ -35,30 +69,11 @@ void playClickSound() {
     clickSound.play();
 }
 
-TileGrid createLevel() {
-    TileGrid level;
-    level.resize(LEVEL_Y);
-    for (int y = 0; y < LEVEL_Y; ++y) {
-        level[y].resize(LEVEL_X);
-        for (int x = 0; x < LEVEL_X; ++x) {
-            level[y][x] = std::make_unique<Brick>(sf::Vector2i(x, y));
-        }
-    }
-    level[1][1] = std::make_unique<ElixirPump>(sf::Vector2i(1, 1));
-    level[1][2] = std::make_unique<Elixir>(sf::Vector2i(2, 1));
-    level[1][3] = std::make_unique<Elixir>(sf::Vector2i(3, 1));
-    level[1][4] = std::make_unique<Elixir>(sf::Vector2i(4, 1));
-    level[1][5] = std::make_unique<ElixirStorage>(sf::Vector2i(5, 1), 0.5f);
-    return level;
-}
-
 void renderGround(sf::RenderWindow &window) {
     auto &resources = ResourceHolder::getInstance();
-    static TileGrid level = createLevel();
     static sf::Vector2i selectedTile(-1, -1);
 
     sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-    sf::Vector2i currentTile(-1, -1);
 
     for (int y = 0; y < LEVEL_Y; ++y) {
         for (int x = 0; x < LEVEL_X; ++x) {
@@ -72,7 +87,7 @@ void renderGround(sf::RenderWindow &window) {
             if (tile->getRectangle().contains(mousePos)) {
                 currentTile = sf::Vector2i(x, y);
                 tile->setSelected(true);
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && currentTile != selectedTile) {
+                if (currentTile != selectedTile) {
                     playClickSound();
                     selectedTile = currentTile;
                 }

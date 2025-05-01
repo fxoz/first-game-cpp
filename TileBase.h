@@ -41,17 +41,11 @@ public:
         position = newPosition;
     }
 
-    sf::Vector2f getPosition() const {
-        return position;
-    }
-
-    sf::Vector2i getIndex() const {
-        return index;
-    }
-
-    bool isSelected() const {
-        return selected;
-    }
+    bool isSelected() const { return selected; }
+    sf::Vector2f getPosition() const { return position; }
+    sf::Vector2i getIndex() const { return index; }
+    std::string getName() const { return name; }
+    std::string getDescription() const { return description; }
 
     void setSelected(bool selected) {
         this->selected = selected;

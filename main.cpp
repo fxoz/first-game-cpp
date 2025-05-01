@@ -69,6 +69,8 @@ int main() {
     window.setFramerateLimit(FPS_MAX);
     window.setVerticalSyncEnabled(VSYNC_ENABLED);
 
+    initLevel();
+
     int fps = 0;
     float fpsLastUpdatedTime = -1;
     float framesThisSecond = 0;
@@ -90,17 +92,19 @@ int main() {
 
         framesThisSecond++;
 
-        if (!isViewSettings) {
-            window.clear();
-            renderGround(window);
-            renderUi(window);
-            renderFps(window, fps);
-            window.display();
-        } else {
-            window.clear();
+        window.clear();
+        if (isViewSettings) {
             renderSettings(window);
             window.display();
+            return 0;
         }
+
+        renderGround(window);
+        renderUi(window);
+        renderFps(window, fps);
+        renderCoordinates(window);
+        renderTooltip(window);
+        window.display();
     }
 
     return 0;

@@ -17,7 +17,12 @@
 #include "TileBase.h"
 
 using TileGrid = std::vector<std::vector<std::unique_ptr<TileBase>>>;
+
 void renderGround(sf::RenderWindow &window);
+
 sf::Vector2f getTilePosition(const sf::Vector2i &tileIndex);
+sf::Vector2i getTileIndex(const sf::Vector2f &mousePos);
+TileBase* getTileAt(const sf::Vector2i &tileIndex);
+void initLevel();
 
 #endif
