@@ -27,8 +27,9 @@ add_executable(${PROJECT_NAME} main.cpp
         TileBase.h
         tiles/Brick.h
         ResourceManager.h
-        level_reader.cpp
-        level_reader.h
+        LevelManager.cpp
+        LevelManager.h
+        ground.h
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${SFML_TARGETS})

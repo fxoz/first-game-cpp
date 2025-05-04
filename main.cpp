@@ -7,6 +7,7 @@
 #include "ui.h"
 #include "base.h"
 #include "ground.h"
+#include "LevelManager.h"
 #include "settings.h"
 
 #define FPS_MAX 360
@@ -14,6 +15,8 @@
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
 #define VSYNC_ENABLED false
+
+LevelManager globalLevelManager;
 
 void onKey(sf::RenderWindow &window, sf::Event event, int screenWidth, int screenHeight, bool &isFullscreen, bool &isViewSettings) {
     if (event.key.code == sf::Keyboard::F11) {
@@ -69,7 +72,7 @@ int main() {
     window.setFramerateLimit(FPS_MAX);
     window.setVerticalSyncEnabled(VSYNC_ENABLED);
 
-    initLevel();
+    globalLevelManager.initLevel();
 
     int fps = 0;
     float fpsLastUpdatedTime = -1;
@@ -99,11 +102,11 @@ int main() {
             return 0;
         }
 
-        renderGround(window);
+        renderGround(window, globalLevelManager);
         renderUi(window);
         renderFps(window, fps);
         renderCoordinates(window);
-        renderTooltip(window);
+        renderTooltip(window, globalLevelManager);
         window.display();
     }
 

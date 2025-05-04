@@ -2,6 +2,7 @@
 #include "ResourceManager.h"
 #include "base.h"
 #include "ground.h"
+#include "LevelManager.h"
 
 inline sf::Font& getUIFont() {
     return *ResourceHolder::getInstance().getFont(FOLDER_ASSETS "fonts/ui.ttf");
@@ -37,7 +38,7 @@ void renderFps(sf::RenderWindow &window, int fps) {
 
 void renderCoordinates(sf::RenderWindow &window) {
     auto tileIndex = getTileIndex(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
-    TileBase* tile = getTileAt(tileIndex);
+    TileBase* tile = (LevelManager{}).getTileAt(tileIndex);
     if (!tile) {
         return;
     }
@@ -49,10 +50,10 @@ void renderCoordinates(sf::RenderWindow &window) {
     window.draw(coordsText);
 }
 
-void renderTooltip(sf::RenderWindow &window) {
+void renderTooltip(sf::RenderWindow &window, LevelManager &levelManager) {
     sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
-    TileBase* tile = getTileAt(getTileIndex(mousePos));
+    auto tile = levelManager.getTileAt(getTileIndex(mousePos));
     if (!tile || tile->getName() == "Brick") {
         return;
     }
@@ -72,7 +73,7 @@ void renderTooltip(sf::RenderWindow &window) {
     float tooltipHeight = titleBounds.height + descBounds.height + spacing + 3 * margin;
 
     sf::RectangleShape background(sf::Vector2f(tooltipWidth, tooltipHeight));
-    background.setFillColor(sf::Color(0, 0, 0, 200));
+    background.setFillColor(sf::Color(20, 20, 20, 200));
     sf::Vector2f tooltipPos(mousePos.x, mousePos.y - tooltipHeight);
     background.setPosition(tooltipPos);
 

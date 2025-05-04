@@ -5,35 +5,18 @@
 #include "tiles/Elixir.h"
 #include "tiles/ElixirPump.h"
 #include "tiles/ElixirStorage.h"
-
+#include "LevelManager.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <memory>
 #include <vector>
 
-constexpr int LEVEL_X = 16;
-constexpr int LEVEL_Y = 16;
+#include "LevelManager.h"
 
 using TileGrid = std::vector<std::vector<std::unique_ptr<TileBase>>>;
 
-TileGrid level;
 sf::Vector2i currentTile(-1, -1);
-
-void initLevel() {
-    level.resize(LEVEL_Y);
-    for (int y = 0; y < LEVEL_Y; ++y) {
-        level[y].resize(LEVEL_X);
-        for (int x = 0; x < LEVEL_X; ++x) {
-            level[y][x] = std::make_unique<Brick>(sf::Vector2i(x, y));
-        }
-    }
-    level[1][1] = std::make_unique<ElixirPump>(sf::Vector2i(1, 1));
-    level[1][2] = std::make_unique<Elixir>(sf::Vector2i(2, 1));
-    level[1][3] = std::make_unique<Elixir>(sf::Vector2i(3, 1));
-    level[1][4] = std::make_unique<Elixir>(sf::Vector2i(4, 1));
-    level[1][5] = std::make_unique<ElixirStorage>(sf::Vector2i(5, 1), 0.5f);
-}
 
 sf::Vector2f getTilePosition(const sf::Vector2i &tileIndex) {
     return {
@@ -49,15 +32,6 @@ sf::Vector2i getTileIndex(const sf::Vector2f &mousePos) {
     };
 }
 
-TileBase* getTileAt(const sf::Vector2i &tileIndex) {
-    if (tileIndex.x < 0 || tileIndex.x >= LEVEL_X ||
-        tileIndex.y < 0 || tileIndex.y >= LEVEL_Y ||
-        level.empty() || level[tileIndex.y].empty()) {
-        return nullptr;
-        }
-    return level[tileIndex.y][tileIndex.x].get();
-}
-
 void playClickSound() {
     auto &resources = ResourceHolder::getInstance();
     static sf::Sound clickSound;
@@ -69,7 +43,8 @@ void playClickSound() {
     clickSound.play();
 }
 
-void renderGround(sf::RenderWindow &window) {
+void renderGround(sf::RenderWindow &window, LevelManager &levelManager) {
+    auto &level = levelManager.getLevel();
     auto &resources = ResourceHolder::getInstance();
     static sf::Vector2i selectedTile(-1, -1);
 
@@ -77,7 +52,7 @@ void renderGround(sf::RenderWindow &window) {
 
     for (int y = 0; y < LEVEL_Y; ++y) {
         for (int x = 0; x < LEVEL_X; ++x) {
-            level[y][x]->setSelected(false);
+            //level[y][x]->setSelected(false);
         }
     }
 

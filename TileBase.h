@@ -4,11 +4,21 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include "base.h"
+//#include "ground.h"
 #include "ResourceManager.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Sprite.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/System/Vector2.hpp"
+
+#define TILE_SIZE_UNSCALED 16
+#define TILE_SIZE (TILE_SIZE_UNSCALED * TILE_ZOOM)
+#define TILE_SIZE_HALF (TILE_SIZE / 2.f)
+#define GROUND_START_X 500
+#define GROUND_START_Y (1 * TILE_SIZE)
+#define TILE_ZOOM 3.f
+#define TILE_ZOOM_HALF (TILE_ZOOM / 2.f)
 
 class TileBase {
 protected:
